@@ -1,0 +1,120 @@
+Does the input text semantics or step specify any of the following factors?
+Please follow the instructions below and provide the information of each dimensional attribute corresponding to the **final target image semantics**.
+
+1. Entity Category and Quantity: Indicates which key entities and their corresponding quantities are specified in the prompt. 
+Need to be distinguished from the **background**; background-related terms do not belong to entity categories, such as "water" in "in the water" or "lake" in "by the lake"—these are not considered entities. 
+If specified, record them in the output JSON under "category" and "number". 
+"category" should list entity types only (without any attribute words), and "number" should contain integers representing the count of each entity. If the number of entities specified in the prompt is unclear—such as using terms like "some", "many", or "several"—then set the "number" as -1.
+If an object is supposed to be removed (e.g., in an editing task), then reduce its quantity to the correct number (e.g., 0); if an object is to be added, then increase its quantity to the correct number.
+If not specified, write "null" for both "category" and "number".
+example:
+<goal>
+{
+    "category_number": {"pig": 2,"dog": 4}
+}
+</goal>
+
+2. Reference Consistency: Indicates whether the appearance or shape of entities in the prompt are required to match a reference image. 
+If specified, write the object category, reference image path, and reference type in the output JSON under "identity". 
+The reference type should be one of ["face", "pose", "identity"], where:
+"face" means the person"s face should match the reference image,
+"pose" means the body posture should match,
+"identity" means the object"s overall appearance should match.
+**Note 1: The prompt must explicitly mention reference to a specific image in order to determine that it involves Reference Consistency.**
+**Note 2: For the editing task, the original image provided by the user is not considered a reference image here.**
+If not specified, it is 'null'.
+example:
+<goal>
+{
+    "identity": [{"dog": "image.jpg", "type": "identity"}]
+}
+</goal>
+
+3. Positional relationship: Indicates whether the prompt specifies concrete positional relationships such as "A is above B" or "C is in front of D". 
+Entities involved in positional relationships should be considered key entities in the prompt. 
+Abstract relationships like "A holding B" or "C hugging D" do *not* count. If specified, write them under "position" in the output JSON.
+If not specified, it is 'null'.
+example:
+<goal>
+{
+    "position": ["A pig is next to the cow.","A car is to the right of a bicycle."]
+}
+</goal>
+
+4. Attribute binding: Indicates whether key entities in the prompt are described with specific attribute associations. 
+Please note that attribute binding requires the entity to have an explicitly stated attribute word, such as material or color (quantity does not count).
+Entities must be independent individuals, not body parts. If an entity does not have clearly stated attributes in the task, then no attribute description is required.
+If so, present the key entities and their bound attributes in the form of clauses in the output JSON under "attribute-binding".
+If not specified, it is 'null'.
+example:
+<goal>
+{
+    "attribute-binding": ["a red dog.", "A wooden mouse.", "A tattered backpack"]
+}
+</goal>
+
+5. Image Style: Indicates whether the prompt specifies a particular overall visual style for the image, such as "realistic style", "cartoon style", "black-and-white photography", etc. 
+If specified, include it under "style" in the output JSON.
+If not specified, it is 'null'.
+example:
+<goal>
+{
+    "style": "Dreamy style"
+}
+</goal>
+
+6. Background: Indicates whether the prompt specifies the background environment where the entities are located, such as "deep sea", "forest", "city", etc. 
+If specified, include it under "background" in the output JSON.
+If not specified, it is 'null'.
+example:
+<goal>
+{
+    "background": "Dreamy style"
+}
+</goal>
+
+All the questions in the above questionnaire should be written in a single JSON file, like this:
+example:
+<goal>
+{
+    "category_number": {"pig": 2,"dog": 4},
+    "identity": [{"dog": "image.jpg", "type": "identity"}],
+    "position": ["A pig is next to the cow.","A car is to the right of a bicycle."],
+    "attribute-binding": ["two pink pigs"],
+    "style": "Dreamy style",
+    "background": "Dreamy style"
+}
+</goal>
+
+If any item is not specified, set it directly to `null`.
+example:
+<goal>
+{
+    "category_number": {"pig":2, "dog": 4},
+    "identity": null,
+    "position": null,
+    "attribute-binding": null,
+    "style": "Dreamy style",
+    "background": "forest"
+}
+</goal>
+
+Here are some sample references for your consideration:
+<input>
+prompt: A dog sits by a round clock under a white lamp, with two green apples and four birds nearby, and the overall environment is in a quiet room. The dog"s appearance refers to the image "./temp/test.png".
+</input>
+
+<output>
+<goal>
+{
+    "category_number": {"dog": 1, "clock": 1, "lamp": 1, "apple": 2, "bird": 4},
+    "identity": [{"dog": "./temp/test.png", "type": "identity"}],
+    "position": ["A pig is next to the cow.","A car is to the right of a bicycle."],
+    "attribute-binding": ["a round clock.", "a white lamp.", "two green apples"],
+    "style": null,
+    "background": "a quiet room"
+}
+</goal>
+</output>
+
+Output JSON data in XML format (). Please refer to the provided example for details.

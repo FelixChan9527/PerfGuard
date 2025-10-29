@@ -1,0 +1,69 @@
+{
+    "text2image-generation tool": {
+        "FLUX": {
+            "color": 0.7519,
+            "shape": 0.7488,
+            "texture": 0.2793,
+            "2D-spatial": 0.7522,
+            "3D-spatial": 0.2815,
+            "numeracy": 0.3371,
+            "non-spatial": 0.2682
+        },
+        "SD3_Tool": {
+            "color": 0.7073,
+            "shape": 0.2651,
+            "texture": 0.7287,
+            "2D-spatial": 0.2726,
+            "3D-spatial": 0.7265,
+            "numeracy": 0.7272,
+            "non-spatial": 0.2698
+        },
+        "Pixart": {
+            "color": 0.2836,
+            "shape": 0.2737,
+            "texture": 0.2591,
+            "2D-spatial": 0.2666,
+            "3D-spatial": 0.7351,
+            "numeracy": 0.2179,
+            "non-spatial": 0.7379
+        },
+        "Layout_to_Image": {
+            "color": 0.2564,
+            "shape": 0.7116,
+            "texture": 0.7331,
+            "2D-spatial": 0.7075,
+            "3D-spatial": 0.2572,
+            "numeracy": 0.7259,
+            "non-spatial": 0.724
+        }
+    },
+    "image-editing tool": {
+        "Step1X_Edit_ImageEditTool": {
+            "addition": 0.7351,
+            "removement": 0.6745,
+            "replacement": 0.6988,
+            "attribute-alter": 0.6813,
+            "motion-change": 0.4431,
+            "style-transfer": 0.7943,
+            "background-change": 0.5769
+        },
+        "AnySD_EditTool": {
+            "addition": 0.2045,
+            "removement": 0.665,
+            "replacement": 0.197,
+            "attribute-alter": 0.1958,
+            "motion-change": 0.2508,
+            "style-transfer": 0.2615,
+            "background-change": 0.2059
+        },
+        "UltraEdit_Tool": {
+            "addition": 0.5836,
+            "removement": 0.1956,
+            "replacement": 0.6373,
+            "attribute-alter": 0.6577,
+            "motion-change": 0.7897,
+            "style-transfer": 0.4224,
+            "background-change": 0.7389
+        }
+    }
+}

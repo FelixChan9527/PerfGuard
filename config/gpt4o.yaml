@@ -1,0 +1,7 @@
+llm:
+  api_type: 'openai'
+  base_url: 'xxx'
+  api_key: 'xxx'
+  api_version: 'xxx'
+  model: 'gpt-4o'
+  temperature: 0.5
