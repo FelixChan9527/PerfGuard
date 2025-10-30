@@ -41,7 +41,7 @@ pip install -r requirement.txt
 ```
 
 6. Download the planner checkpoint zip file and unzip it.
-```
+```shell
 link: https://pan.baidu.com/s/1DyK9rZeTebdwAKfl_pl6DQ?pwd=ziy2 passward: ziy2 
 ```
 
