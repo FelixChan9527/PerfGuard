@@ -1,0 +1,20 @@
+llm:
+  model: Qwen3-14B
+  base_url: http://127.0.0.1:8000/v1
+  api_key: local-vllm
+  api_key_env: NGAA_API_KEY
+  secrets_file: null
+  proxy: ''
+  temperature: 0.3
+  max_tokens: 4096
+  timeout: 360
+  max_retries: 2
+  retry_budget: 1080
+  stream: true
+  stream_idle_timeout: 90
+  stream_max_seconds: 1200
+  retry_timeouts: false
+  omit_nonblank_pattern: true
+  extra_body:
+    chat_template_kwargs:
+      enable_thinking: false

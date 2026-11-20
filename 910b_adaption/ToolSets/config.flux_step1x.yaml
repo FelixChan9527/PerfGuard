@@ -1,0 +1,143 @@
+{
+  "tools_set_name": "FLUX_Step1X",
+  "output_format": "<result><image>/absolute/path/to/generated.png</image></result>",
+  "tools_set_info": {
+    "FLUX": {
+      "category": "text2image-generation tool",
+      "description": "\n                        Image generation tool. A text-to-image generation tool that produces images with highly realistic object textures and achieves a high degree of alignment with textual semantics. \n                        ",
+      "preference": {
+        "color": 0.7519,
+        "shape": 0.7488,
+        "texture": 0.2793,
+        "2D-spatial": 0.7522,
+        "3D-spatial": 0.2815,
+        "numeracy": 0.3371,
+        "non-spatial": 0.2682
+      },
+      "module": "ToolSets.backends.flux",
+      "class_name": "FLUXTool",
+      "backend": "tool_backends.flux",
+      "command": "python ToolSets/backends/flux.py",
+      "conda_env": "agent4aigc-flux",
+      "model_path": "${AGENT4AIGC_MODEL_ROOT}/flux",
+      "conds_info": {
+        "text": {
+          "description": "Output image semantics",
+          "type": "string",
+          "example": "A cat holding a sign that says hello world."
+        },
+        "seed": {
+          "type": "integer",
+          "default": 42,
+          "required": false,
+          "host_only": true
+        },
+        "num_inference_steps": {
+          "type": "integer",
+          "default": 28,
+          "required": false,
+          "host_only": true,
+          "minimum": 1,
+          "maximum": 200
+        },
+        "width": {
+          "type": "integer",
+          "default": 1024,
+          "required": false,
+          "host_only": true,
+          "const": 1024
+        },
+        "height": {
+          "type": "integer",
+          "default": 1024,
+          "required": false,
+          "host_only": true,
+          "const": 1024
+        }
+      },
+      "device": "npu:5",
+      "endpoint": "http://127.0.0.1:18105"
+    },
+    "Step1X_Edit_ImageEditTool": {
+      "category": "image-editing tool",
+      "description": "\n                        Image editing tool. ImageEditTool can edit the input image based on the instructions provided in the text.\n                        ",
+      "preference": {
+        "addition": 0.7351,
+        "removement": 0.6745,
+        "replacement": 0.6988,
+        "attribute-alter": 0.6813,
+        "motion-change": 0.4431,
+        "style-transfer": 0.7943,
+        "background-change": 0.5769
+      },
+      "module": "ToolSets.backends.step1x_edit",
+      "class_name": "Step1XEditTool",
+      "backend": "tool_backends.step1x_edit",
+      "command": "python ToolSets/backends/step1x_edit.py",
+      "conda_env": "agent4aigc-step1x",
+      "model_path": "${AGENT4AIGC_MODEL_ROOT}/step1x_edit",
+      "conds_info": {
+        "original_img_path": {
+          "description": "Path to the original image",
+          "type": "string",
+          "example": "inputs/original_image.png",
+          "aliases": [
+            "image",
+            "img_path"
+          ],
+          "context": "image"
+        },
+        "instruction": {
+          "description": "Editing instruction",
+          "type": "string",
+          "example": "Please add a woman to the right of this person."
+        },
+        "seed": {
+          "type": "integer",
+          "default": 42,
+          "required": false,
+          "host_only": true
+        },
+        "num_inference_steps": {
+          "type": "integer",
+          "default": 28,
+          "required": false,
+          "host_only": true,
+          "minimum": 1,
+          "maximum": 200
+        },
+        "width": {
+          "type": "integer",
+          "default": 1024,
+          "required": false,
+          "host_only": true,
+          "const": 1024
+        },
+        "height": {
+          "type": "integer",
+          "default": 1024,
+          "required": false,
+          "host_only": true,
+          "const": 1024
+        }
+      },
+      "qwen_model_path": "${AGENT4AIGC_MODEL_ROOT}/qwen25vl",
+      "source_path": "${AGENT4AIGC_PROJECT_ROOT}/external/Step1X-Edit",
+      "version": "v1.1",
+      "device": "npu:7",
+      "endpoint": "http://127.0.0.1:18106"
+    }
+  },
+  "description_source": {
+    "path": "prompt/AIGC_tools_desciption.py",
+    "sha256": "d56b55603c5b2fdaf2190fdce7bd4404be8ec81c59e7389aab792546e8bbfc2e"
+  },
+  "default_device": "npu:7",
+  "preference_source": {
+    "path": "prompt/preference_logs/preference_lastest.json",
+    "sha256": "8660adc3202527e85b634aeb5f486943acf035e5252e13c07d2f9f3cd554cfdc",
+    "note": "Runtime values used by the original Basic_Tool, overriding AIGC_DESCRIPTION preference."
+  },
+  "max_loaded_tools": 2,
+  "execution_mode": "resident"
+}
