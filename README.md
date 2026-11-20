@@ -1,6 +1,6 @@
 <h1 align="center">PerfGuard of ICLR2026</h1>
 
-This is the official code for PerfGuard in ICLR 2026
+This is the official code for PerfGuard in ICLR 2026. The implementation supports both NVIDIA GPUs and Ascend 910B NPUs.
 
 ![PerfGuard](./assets/img1.png)
 
@@ -44,7 +44,8 @@ This is the official code for PerfGuard in ICLR 2026
 | PerfGuard (Ascend 910B) | 8.78 | **9.15** | 8.37 | 8.77 |
 
 
-## Environment Setup
+## NVIDIA Environment Setup
+
 1. Install Conda Environment
 ```shell
 conda create -n PerfGuard python=3.10
@@ -93,9 +94,36 @@ vllm serve your_planner_checkpoint  --port 8002
 
 8. Modify the LLM config file under `./nvidia_setting/config`
 
-## Run the program
+## Ascend 910B Environment Setup
+
+- Use the same Python 3.10 baseline, tool sources, and model versions as the NVIDIA setup. Prepare the Ascend driver/CANN stack and compatible `torch`/`torch_npu` builds; MetaGPT is not required.
+- The shared tool set is FLUX, SD3, Step1X-Edit, and AnySD. Use the same repositories listed above and prepare the 910B tool environments named in `910b_adaption/ToolSets/config.yaml`.
+- Prepare the agent Conda environment and install its Python dependencies:
+
+```shell
+cd 910b_adaption
+conda create -n Agent4AIGC python=3.10
+conda activate Agent4AIGC
+pip install -r requirements.txt
+```
+
+- `deployment/activate.sh` defaults to `/data/chenzhipeng/miniconda3`; set `AGENT4AIGC_CONDA_ROOT` before sourcing it if Conda is installed elsewhere.
+- Place third-party repositories under `910b_adaption/external/`. The default checkpoint root is `910b_adaption/external/Step1X-Edit/models/`; override it with `AGENT4AIGC_MODEL_ROOT` if needed.
+- Use the same Qwen3-14B service configured for NVIDIA in `nvidia_setting/config/others.yaml`. Set both `model` and `base_url` in `910b_adaption/config/llm.yaml` to match that service. Set NPU devices, tool endpoints, and environment names in `910b_adaption/ToolSets/config.yaml`. Model download and deployment scripts are user-provided.
+
+## Run the program (NVIDIA)
+
 ```shell
 cd nvidia_setting
 python run.py
+```
+
+## Run the program (Ascend 910B)
+
+```shell
+cd 910b_adaption
+source deployment/activate.sh
+python deployment/tools/serve.py start --config ToolSets/config.yaml --wait
+python inference.py --tool-config ToolSets/config.yaml --prompt "Describe the image task here."
 ```
 
