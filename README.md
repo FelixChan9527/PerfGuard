@@ -2,7 +2,7 @@
 
 This is the official code for PerfGuard in ICLR 2026. The implementation supports both NVIDIA GPUs and Ascend 910B NPUs.
 
-![PerfGuard](./assets/img1.png)
+![PerfGuard](./img/img1.png)
 
 ## Benchmark Results
 
